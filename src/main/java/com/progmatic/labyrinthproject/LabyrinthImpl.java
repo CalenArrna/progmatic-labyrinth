@@ -77,8 +77,8 @@ public class LabyrinthImpl implements Labyrinth {
 
     @Override
     public CellType getCellType(Coordinate c) throws CellException {
-        if ((c.getCol() > this.width-1 || c.getRow() > this.height-1) 
-                ||( c.getCol() < 0 || c.getRow() < 0)) {
+        if ((c.getCol() > this.width - 1 || c.getRow() > this.height - 1)
+                || (c.getCol() < 0 || c.getRow() < 0)) {
             throw new CellException(c.getRow(), c.getCol(), "Ezen a koordinátán nem szerepel cella a labirintusban!");
         }
         int idx = c.getRow() * this.width + c.getCol();
@@ -105,6 +105,9 @@ public class LabyrinthImpl implements Labyrinth {
         }
         int idx = c.getRow() * this.width + c.getCol();
         cellListOfLabyrinth.get(idx).setType(type);
+        if (type == CellType.START) {
+            playerPosition = cellListOfLabyrinth.get(idx);
+        }
     }
 
     @Override
@@ -133,10 +136,10 @@ public class LabyrinthImpl implements Labyrinth {
         Coordinate south = idxPlayer + this.width <= this.height * this.width - 1 ?
                 cellListOfLabyrinth.get(idxPlayer + this.width).getCoordinate() : null;
 
-        Coordinate west = idxPlayer - 1 >= 0 ?
+        Coordinate west = cellListOfLabyrinth.get(idxPlayer - 1).getCoordinate().getCol() >= 0 ?
                 cellListOfLabyrinth.get(idxPlayer - 1).getCoordinate() : null;
 
-        Coordinate east = idxPlayer + 1 <= this.width ?
+        Coordinate east = cellListOfLabyrinth.get(idxPlayer + 1).getCoordinate().getCol() < this.width ?
                 cellListOfLabyrinth.get(idxPlayer + 1).getCoordinate() : null;
 
 
