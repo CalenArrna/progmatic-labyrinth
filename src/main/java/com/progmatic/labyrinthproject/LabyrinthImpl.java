@@ -23,7 +23,6 @@ public class LabyrinthImpl implements Labyrinth {
     private Cell playerPosition;
 
     public LabyrinthImpl() {
-        System.out.println("Warning! Labyrinth is Blank!");
     }
 
     @Override
@@ -78,7 +77,8 @@ public class LabyrinthImpl implements Labyrinth {
 
     @Override
     public CellType getCellType(Coordinate c) throws CellException {
-        if (c.getCol() > this.width || c.getRow() > this.height) {
+        if ((c.getCol() > this.width-1 || c.getRow() > this.height-1) 
+                ||( c.getCol() < 0 || c.getRow() < 0)) {
             throw new CellException(c.getRow(), c.getCol(), "Ezen a koordinátán nem szerepel cella a labirintusban!");
         }
         int idx = c.getRow() * this.width + c.getCol();
